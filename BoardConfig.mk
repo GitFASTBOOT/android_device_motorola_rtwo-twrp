@@ -16,7 +16,7 @@
 
 ALLOW_MISSING_DEPENDENCIES := true
 
-DEVICE_PATH := device/motorola/rtow
+DEVICE_PATH := device/motorola/rtwo
 
 # Architecture
 TARGET_ARCH := arm64
