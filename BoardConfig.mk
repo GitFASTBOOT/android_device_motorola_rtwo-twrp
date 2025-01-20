@@ -137,6 +137,7 @@ TW_FRAMERATE := 120
 TW_MAX_BRIGHTNESS := 16380
 TW_DEFAULT_BRIGHTNESS := 7164
 TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel0-backlight/brightness"
+TW_CUSTOM_CPU_TEMP_PATH := /sys/class/thermal/thermal_zone50/temp
 TW_SCREEN_BLANK_ON_BOOT := true
 
 # Exclude
