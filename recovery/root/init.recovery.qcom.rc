@@ -79,3 +79,80 @@ on property:sys.usb.config=fastboot && property:sys.usb.ffs.ready=1 && property:
 on fs
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
+
+# Crypto configuration 
+
+on init
+    export LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw:/system/lib64/hw
+    setprop crypto.ready 1
+
+on fs
+    install_keyring
+
+on early-fs
+    start vold
+
+service gatekeeper-1-0-qti /system/bin/android.hardware.gatekeeper@1.0-service-qti
+    class hal
+    user root
+    group root
+    disabled
+    seclabel u:r:recovery:s0
+
+
+service gatekeeper-1-0-spu-qti /system/bin/android.hardware.gatekeeper@1.0-service-spu-qti
+    class hal
+    user root
+    group root
+    disabled
+    seclabel u:r:recovery:s0
+
+service keymaster-4-0-strongbox /system/bin/android.hardware.keymaster@4.0-strongbox-service-qti
+    user root
+    group root drmrpc
+    disabled
+    oneshot
+    seclabel u:r:recovery:s0
+
+service keymint-qti /system/bin/android.hardware.security.keymint-service-qti
+    user root
+    group root drmrpc
+    disabled
+    oneshot
+    seclabel u:r:recovery:s0
+
+on property:crypto.ready=1
+    start gatekeeper-1-0-qti
+    start gatekeeper-1-0-spu-qti
+    start keymaster-4-0-strongbox
+    start keymint-qti
+
+on property:hwservicemanager.ready=true
+    start gatekeeper-1-0-qti
+    start gatekeeper-1-0-spu-qti
+    start keymaster-4-0-strongbox
+    start keymint-qti
+
+on property:ro.crypto.state=unsupported
+    stop gatekeeper-1-0-qti
+    stop gatekeeper-1-0-spu-qti
+    stop keymaster-4-0-strongbox
+    stop keymint-qti
+
+on property:ro.crypto.state=unencrypted
+    stop gatekeeper-1-0-qti
+    stop gatekeeper-1-0-spu-qti
+    stop keymaster-4-0-strongbox
+    stop keymint-qti
+
+on property:twrp.decrypt.done=true
+    stop gatekeeper-1-0-qti
+    stop gatekeeper-1-0-spu-qti
+    stop keymaster-4-0-strongbox
+    stop keymint-qti
+
+on property:crypto.ready=0
+    stop gatekeeper-1-0-qti
+    stop gatekeeper-1-0-spu-qti
+    stop keymaster-4-0-strongbox
+    stop keymint-qti
