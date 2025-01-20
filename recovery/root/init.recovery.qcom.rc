@@ -156,3 +156,6 @@ on property:crypto.ready=0
     stop gatekeeper-1-0-spu-qti
     stop keymaster-4-0-strongbox
     stop keymint-qti
+
+on boot
+    start health-hal-2-1
