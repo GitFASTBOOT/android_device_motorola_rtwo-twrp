@@ -25,6 +25,8 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+import /android.hardware.health-service.qti.rc
+
 # Crypto configuration 
 
 on init
@@ -103,4 +105,4 @@ on property:crypto.ready=0
     stop keymint-qti
 
 on boot
-    start health-hal-2-1
+    start health-rtwo

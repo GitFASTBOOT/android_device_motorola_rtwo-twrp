@@ -1,0 +1,8 @@
+service health-rtwo /system/bin/android.hardware.health-service.qti
+    class hal
+    user root
+    group root
+    capabilities WAKE_ALARM BLOCK_SUSPEND
+    file /dev/kmsg w
+    seclabel u:r:recovery:s0
+
