@@ -14,9 +14,6 @@
 # limitations under the License.
 #
 
-# Hidl
-PRODUCT_ENFORCE_VINTF_MANIFEST := true 
-
 # Virtual A/B
 ENABLE_VIRTUAL_AB := true
 $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota.mk)
