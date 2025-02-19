@@ -45,6 +45,7 @@ on early-init
    insmod /vendor/lib/modules/snd-usb-audio-qmi.ko
    insmod /vendor/lib/modules/wcd_usbss_i2c.ko
    insmod /vendor/lib/modules/usb_bam.ko
+   insmod /vendor/lib/modules/qti_battery_charger.ko
 
 # Crypto configuration 
 
